@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRouter from './routes/user.route.js';
+import authRouter from './routes/auth.route.js';
 dotenv.config();
 
 mongoose.connect(process.env.MONGO).then(() =>{
@@ -12,8 +13,14 @@ mongoose.connect(process.env.MONGO).then(() =>{
 
 const app = express();
 
+//allow json as the input of the server
+app.use(express.json());
+
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
 
+//gamodzaxeba - http://localhost:3000/api/user/test
 app.use('/api/user', userRouter);
+//gamodzaxeba - postman - post - http://localhost:3000/api/auth/signup
+app.use('/api/auth', authRouter);
